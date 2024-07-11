@@ -25,6 +25,7 @@
     <!-- Mostrar sparkline para sin resistencia del viento -->
     <h3>Gráfica Sin Resistencia del Viento</h3>
     <v-sparkline
+      v-if="mostrarSinResistencia"
       :auto-line-width="autoLineWidth"
       :fill="fill"
       :gradient="gradient"
@@ -41,6 +42,7 @@
     <!-- Mostrar sparkline para con coeficiente de rozamiento -->
     <h3>Gráfica Con Coeficiente de Rozamiento</h3>
     <v-sparkline
+      v-if="mostrarConRozamiento"
       :auto-line-width="autoLineWidth"
       :fill="fill"
       :gradient="gradient"
@@ -82,10 +84,16 @@ export default {
       anguloConRozamiento: 0,
       coeficienteRozamiento: 0, // Coeficiente de rozamiento
       parabolicDataConRozamiento: [], // Almacenará los datos de la gráfica con rozamiento
+
+      // Control de visualización
+      mostrarSinResistencia: false,
+      mostrarConRozamiento: false,
     };
   },
   methods: {
     calcularAlturas() {
+      this.mostrarSinResistencia = false;
+      this.mostrarConRozamiento = false;
       this.calcularAltura();
       this.calcularAlturaConRozamiento();
     },
@@ -105,6 +113,7 @@ export default {
 
       // Mostrar el array completo por consola
       console.log('Datos de altura:', this.parabolicData);
+      this.mostrarSinResistencia = true;
     },
     calcularAlturaConRozamiento() {
       const radianes = (this.anguloConRozamiento * Math.PI) / 180;
@@ -123,6 +132,7 @@ export default {
 
       // Mostrar el array completo por consola
       console.log('Datos de altura con rozamiento:', this.parabolicDataConRozamiento);
+      this.mostrarConRozamiento = true;
     },
   },
 };
